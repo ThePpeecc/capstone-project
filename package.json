@@ -1,0 +1,30 @@
+{
+  "name": "capstone-project",
+  "version": "1.0.0",
+  "description": "THe final project for my treehouse techdegree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcus A Hansen",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-google-maps": "^2.4.1",
+    "angular-route": "^1.6.1",
+    "angular-simple-logger": "^0.1.7",
+    "basic-auth": "^1.1.0",
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.6",
+    "mongoose-unique-validator": "^1.0.3",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "wtf_wikipedia": "^0.7.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
+  }
+}
