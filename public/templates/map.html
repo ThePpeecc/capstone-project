@@ -11,9 +11,9 @@
       <p>But if you still wan't to use the app, then puch in some coordinates and you can still use the app</p>
     </div>
 
-    <div class="container minMarg">
-      <h4 ng-if="mapCtr.notFound">Looking For You...</h4>
-      <div ng-if="loggedIn" class="row pt-1 my-3 form-group">
+
+      <h4 ng-if="mapCtr.notFound && mapCtr.locationErr == ''">Looking For You...</h4>
+      <div ng-if="loggedIn" class="row pt-1 pl-1 my-3 form-group">
         <div class="col-xs-6 mr-1">
           <input type="text" name="" class="form-control mb-1" ng-model="mapCtr.placeTitle" placeholder="My Place">
         </div>
@@ -21,6 +21,7 @@
           <a class="btn btn-primary" role="button" href ng-click="mapCtr.savePlace(mapCtr.map.center)" >Save This Place</a>
         </div>
       </div>
+      <div class="row pl-1">
       <div class="form-group row">
         <div class="col-xs-6 mr-1">
            <label for="lat" class="col-form-label">Latitude</label>

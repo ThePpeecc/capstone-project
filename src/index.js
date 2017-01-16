@@ -20,7 +20,7 @@ var express = require('express'),
 
 var app = express()
 
-mongoose.connect('mongodb://localhost:27017/wikiMap')
+mongoose.connect('mongodb://localhost:27017/wikiMap') //We connect ot the database
 
 var db = mongoose.connection
 
@@ -51,9 +51,9 @@ app.get('/vendor/angular-base64.js', function(req, res) {
 })
 
 
-app.use(mid.getAuth)
+app.use(mid.getAuth) //Setup the getAuth middleware
 
-app.use('/', express.static('public'))
+app.use('/', express.static('public')) //Setup the static server
 
 app.use('/api', api)
 
@@ -67,7 +67,6 @@ app.use(function(req, res, next) { //<-- see that this has no error, therefore t
 //The error handler
 app.use(function(err, req, res, next) {
     res.status(err.status || 500)
-    console.log(err);
     return res.json(err) //We send the error
 })
 

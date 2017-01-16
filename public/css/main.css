@@ -20,8 +20,8 @@ img {
   .formPage label {
     color: black; }
 
-.minMarg {
-  margin: 1rem; }
+.minPad {
+  padding: 0; }
 
 .px-6 {
   padding: 0 2rem; }

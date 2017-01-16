@@ -1,8 +1,8 @@
 /* global angular*/
 /**
- * This file holds the recipe detail controller module
+ * This file holds the index controller module
  *
- * @summary   The module holds all of the ui functionality for the recipe detail view
+ * @summary   The module holds all of the ui functionality for index view. This is primarily the menu
  *
  * @since     21.11.2016
  * @requires  angular
@@ -10,7 +10,7 @@
  **/
 
 /**
- * The recipe detail controller
+ * The index controller
  * @type controller
  */
 (function() {
@@ -19,22 +19,33 @@
 
             var index = this
 
-
+            /**
+             * Redirects to the lading page
+             */
             index.home = function() {
               $location.path('/')
             }
 
+            /**
+             * Redirects to the login page
+             */
             index.login = function() {
               $location.path('/login')
             }
 
+            /**
+             * Redirects to the user page
+             */
             index.user = function() {
               $location.path('/user')
             }
 
+            /**
+             * Logs the user out and redirects to the landing page
+             */
             index.logOut = function() {
-              communicationFactory.updateUserLoginInfo(null, null)
-              communicationFactory.userData = null
+              communicationFactory.updateUserLoginInfo(null, null) //We delete the users information
+              communicationFactory.userData = null //And the users data
               $rootScope.loggedIn = false;
               $location.path('/')
             }

@@ -16,10 +16,10 @@
 (function() {
     'use strict'
     angular.module('app', ['ngRoute', 'nemLogging', 'uiGmapgoogle-maps', 'base64'])
-        .config(function(uiGmapGoogleMapApiProvider) {
+        .config(function(uiGmapGoogleMapApiProvider) { //We setup the google maps api
 
             uiGmapGoogleMapApiProvider.configure({
-                key: 'AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU',
+                key: 'AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU' //Our google maps api key
             })
         })
 })()

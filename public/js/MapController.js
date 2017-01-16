@@ -1,16 +1,16 @@
 /* global angular*/
 /**
- * This file holds the recipe detail controller module
+ * This file holds the map controller module
  *
- * @summary   The module holds all of the ui functionality for the recipe detail view
+ * @summary   The module holds all of the ui functionality for the map view
  *
- * @since     21.11.2016
+ * @since     04.01.2017
  * @requires  angular
  * @NOTE      [For devs only this module also uses eslint for code quality]
  **/
 
 /**
- * The recipe detail controller
+ * The map controller
  * @type controller
  */
 (function() {
@@ -18,15 +18,18 @@
         .controller('MapController', function($scope, $location, dataService, uiGmapGoogleMapApi, communicationFactory, $routeParams) {
 
             var mapCtr = this,
-            demoCoords = {
-                latitude: 55.6791,
-                longitude: 12.5779
+            demoCoords = { //The demo coordinates are the first place that we load in so the app can load in google maps
+                latitude: 0,
+                longitude: 0
             }
 
             mapCtr.locationErr = ''
             mapCtr.placeTitle = ''
 
-            //Shows the error if an error happens when getting a geolocation
+            /**
+             * Shows the error if an error happens when getting a geolocation
+             * @param  {Error} error The error we get
+             */
             function showError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
@@ -42,7 +45,7 @@
                         mapCtr.locationErr = "An unknown error occurred."
                         break;
                 }
-                $scope.$apply()
+                $scope.$apply() //We apply
             }
 
             /**
@@ -64,21 +67,29 @@
                 $scope.$apply() //Force the change
             }
 
+            /**
+             * This functions saves the current area the user is looking at
+             * @param  {object} place The places coordinates
+             */
             mapCtr.savePlace = function(place) {
-              dataService.savePlace({
+              dataService.savePlace({ //We try to save the place
                 "title": mapCtr.placeTitle,
                 "latitude": place.latitude,
                 "longitude": place.longitude
-              }).then(function(json) {
-                console.log(json)
+              }).then(function() {
                 if (communicationFactory.reloadUserInfo) {
-                  communicationFactory.reloadUserInfo()
+                  communicationFactory.reloadUserInfo() //We reload the users information
                 }
               }).catch(function(err) {
                 console.log(err)
               })
             }
 
+            /**
+             * This functions converts the articles that we download from the api into map markers that can be used on google maps
+             * @param  {array} articles This is an array of articles
+             * @return {array}          We return an array of markers ready to be used in google maps
+             */
             var convertToGMapsMarkers = function(articles) {
                 var markers = [] //Create an empty array of the markers we will return
 
@@ -98,6 +109,11 @@
                 return markers //We return a list of markers
             }
 
+            /**
+             * Function that downloads the articles in an area and returns them as markers
+             * @param  {object} coords The coordinates we use to search
+             * @return {array}         An array of map markers
+             */
             var getArticles = function(coords) {
               var searchCoords = {
                 lat: coords.latitude,
@@ -113,9 +129,13 @@
                     })
             }
 
+            /**
+             * Shows the map at a certain posisiton
+             * @param  {Object} position A set of coordinates we foucus around
+             * @param  {int} zoom        The zoom level of the map
+             */
             var showGMap = function(position, zoom) {
                 uiGmapGoogleMapApi.then(function(maps) {
-                    console.log('Google Maps loaded')
                     mapCtr.map = {
                         center: {
                             latitude: position.latitude,
@@ -126,13 +146,28 @@
                 })
             }
 
+            /**
+             * This funciton looks up the the articles in a given area and displays them
+             * @param  {object} coords The coordinates to look up
+             */
+            mapCtr.lookupPlace = function(coords) {
+              getArticles(coords) //We download the articles
+              showGMap(coords, 17) //And show the map at the users location
+            }
+
+            /**
+             * Function is that is called when we find the users location and want to load in the articles around their place
+             * @param  {object} position The coordinates of the user
+             */
             function showPosition(position) {
                 var coords = position.coords //We take the coordinates out of our posistion
                 mapCtr.notFound = false
-                getArticles(coords)
-                showGMap(coords, 17)
+                mapCtr.lookupPlace(coords) //We lookup the articles in their area
             }
 
+            /**
+             * This function gets the users location
+             */
             var getLocation = function() { //funtion that gets the current location of the user
                 if (navigator.geolocation) {
                     mapCtr.notFound = true
@@ -142,13 +177,8 @@
                 }
             }
 
-            mapCtr.lookupPlace = function(coords) {
-              getArticles(coords)
-              showGMap(coords, 17)
-            }
-
             //Initial calls
-            if ($location.url().split('/')[1] === 'map') {
+            if ($location.url().split('/')[1] === 'map') { //If we are at the maps page
                 var convertToNumbers = {
                   latitude: Number($routeParams.lat),
                   longitude: Number($routeParams.long)
