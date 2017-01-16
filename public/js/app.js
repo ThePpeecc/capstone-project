@@ -15,10 +15,11 @@
  */
 (function() {
     'use strict'
-    angular.module('app', ['ngRoute', 'nemLogging', 'uiGmapgoogle-maps'])
-    .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU',
-    });
-})
+    angular.module('app', ['ngRoute', 'nemLogging', 'uiGmapgoogle-maps', 'base64'])
+        .config(function(uiGmapGoogleMapApiProvider) {
+
+            uiGmapGoogleMapApiProvider.configure({
+                key: 'AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU',
+            })
+        })
 })()

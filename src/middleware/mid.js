@@ -16,6 +16,13 @@ var User = require('../models/user'),
 
 var errorHandler = function(err, req, res, next, status = 500) {
     if (err) {
+        if (err.name == 'LoginErr') {
+            err.errors = {
+                'err': {
+                    message: err.message
+                }
+            }
+        }
         err.status = status
         return next(err)
     }
@@ -25,7 +32,7 @@ var getAuth = function(req, res, next) {
     var userAuth = auth(req) //We get the authentication parameters from the browser
     if (userAuth) { //If they have sendt us any authentication
         User.findOne({
-                'emailAddress': userAuth.name //We find the user by the email
+                'emailAddress': userAuth.name.toLowerCase() //We find the user by the email
             })
             .exec(function(err, user) {
                 errorHandler(err, req, res, next)
@@ -34,11 +41,17 @@ var getAuth = function(req, res, next) {
                         errorHandler(err, req, res, next)
                         if (res) { //true if they match false else
                             req.currentUser = user //we assign the logged in user to currentUser
+                        } else {
+                            var newError = new Error('The password or email dose not match')
+                            newError.name = 'LoginErr'
+                            errorHandler(newError, req, res, next, 401)
                         }
                         next()
                     })
                 } else {
-                    next()
+                    var newError = new Error('The password or email dose not match')
+                    newError.name = 'LoginErr'
+                    errorHandler(newError, req, res, next, 401)
                 }
             })
     } else {

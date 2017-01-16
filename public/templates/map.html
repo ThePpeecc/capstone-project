@@ -1,3 +1,47 @@
-<div ng-controller="MapController as mapCtr">
-  <ui-gmap-google-map ng-if='mapCtr.map.center' center='mapCtr.map.center' zoom='mapCtr.map.zoom'></ui-gmap-google-map>
+<!doctype html>
+<div ng-controller="MapController as mapCtr" class="row">
+  <div class="col-lg-9">
+    <ui-gmap-google-map ng-if="mapCtr.map.center" center="mapCtr.map.center" zoom="mapCtr.map.zoom">
+      <ui-gmap-markers ng-if="mapCtr.wikiArticles" models="mapCtr.wikiArticles" click="mapCtr.markersEvents" coords="'self'" icon="'icon'" ></ui-gmap-markers>
+    </ui-gmap-google-map>
+  </div>
+  <div class="col-lg-3">
+    <div ng-if="mapCtr.locationErr != ''">
+      <h3>{{mapCtr.locationErr}}</h3>
+      <p>But if you still wan't to use the app, then puch in some coordinates and you can still use the app</p>
+    </div>
+
+    <div class="container minMarg">
+      <h4 ng-if="mapCtr.notFound">Looking For You...</h4>
+      <div ng-if="loggedIn" class="row pt-1 my-3 form-group">
+        <div class="col-xs-6 mr-1">
+          <input type="text" name="" class="form-control mb-1" ng-model="mapCtr.placeTitle" placeholder="My Place">
+        </div>
+        <div class="col-xs-6">
+          <a class="btn btn-primary" role="button" href ng-click="mapCtr.savePlace(mapCtr.map.center)" >Save This Place</a>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-6 mr-1">
+           <label for="lat" class="col-form-label">Latitude</label>
+        </div>
+       <div class="col-xs-6">
+         <input type="number" class="form-control" ng-model="mapCtr.map.center.latitude" name="lat" value="{{mapCtr.map.center.latitude}}">
+       </div>
+     </div>
+     <div class="form-group row">
+       <div class="col-xs-6 mr-1">
+          <label for="long" class="col-form-label">Longitude</label>
+       </div>
+      <div class="col-xs-6">
+          <input type="number" class="form-control" ng-model="mapCtr.map.center.longitude" name="long" value="{{mapCtr.map.center.longitude}}">
+      </div>
+    </div>
+    <a class="btn btn-primary" role="button" href ng-click="mapCtr.lookupPlace(mapCtr.map.center)" >Find the articles</a>
+    </div>
+  </div>
+
+  <div ng-if="mapCtr.showDetail">
+    <ng-include src="'templates/detail.html'"></ng-include>
+  </div>
 </div>

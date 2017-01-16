@@ -1,0 +1,12 @@
+<!doctype html>
+<div ng-controller="DetailController as detailCtr" class="row pt-3">
+  <div ng-if="detailCtr.imageURL != ''" class="text-center my-1 col-md-4">
+      <img src="{{detailCtr.imageURL}}" class="img-fluid">
+  </div>
+  <div class="{{detailCtr.imageURL ? 'col-md-8 px-6' : 'col-xs-12 px-2'}}">
+    <h3>{{detailCtr.article.title}} <a ng-if="loggedIn && detailCtr.showSaveButton" class="btn btn-primary" role="button" href ng-click="detailCtr.saveArticle(detailCtr.articleMarker)" >Save This Article</a>
+  </h3>
+    <p>{{detailCtr.article.text}}</p>
+
+  </div>
+</div>

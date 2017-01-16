@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
 
-        <title>My Recipes</title>
+        <title>Wiki Map</title>
 
 
         <!-- Bootstrap -->
@@ -19,9 +19,34 @@
 
     <body ng-app="app">
 
-      <div ng-view></div>
+      <header ng-controller="indexController as index">
+        <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" ng-click="index.home()" href>Wiki Map</a>
 
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <!-- Links -->
+              <li class="nav-item">
+                  <a class="nav-link" ng-click="index.home()" role="button">Home</a>
+              </li>
+              <li class="nav-item">
+                <a ng-if="!loggedIn" class="nav-link" ng-click="index.login()" role="button">Login / Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a ng-if="loggedIn" class="nav-link" ng-click="index.user()" role="button">User</a>
+              </li>
+              <li class="nav-item">
+                <a ng-if="loggedIn" class="nav-link" ng-click="index.logOut()" role="button">Log out</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
 
+      <div class="content" ng-view></div>
 
       <!-- Bootstrap CDN-->
       <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
@@ -32,7 +57,6 @@
       <script src="js/lodash.js"></script>
 
       <!-- Google maps api -->
-      <!-- api key: AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU -->
       <script async defer src="//maps.googleapis.com/maps/api/js?key=AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU"></script>
 
       <!-- Angular -->
@@ -40,8 +64,14 @@
       <script src="vendor/angular-route.js"></script>
       <script src="vendor/angular-simple-logger.js"></script>
       <script src="vendor/angular-google-maps.js"></script>
+      <script src="vendor/angular-base64.js"></script>
       <script src="js/app.js"></script>
+      <script src="js/communicationFactory.js"></script>
+      <script src="js/indexController.js"></script>
       <script src="js/MapController.js"></script>
+      <script src="js/DetailController.js"></script>
+      <script src="js/UserController.js"></script>
+      <script src="js/UserLoginController.js"></script>
       <script src="js/dataService.js"></script>
       <script src="js/route.js"></script>
       <script src="js/globalFunctions.js"></script>

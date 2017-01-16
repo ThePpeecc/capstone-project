@@ -52,11 +52,12 @@ router.get('/articles', function(req, res, next) {
             format: 'json'
         }))
         .then(function(json) {
-            return res.json(JSON.parse(json))
+            return res.json(JSON.parse(json).query)
             // Process html...
         })
         .catch(function(err) {
             // Crawling failed...
+            console.log(err);
         })
 })
 
@@ -86,8 +87,6 @@ router.get('/article/:id', function(req, res, next) {
             info: wikiParser.parse(wikiArticle.revisions[0]['*']),
             text: wikiParser.plaintext(wikiArticle.revisions[0]['*'])
         }
-
-        console.log(articleToReturn);
 
         return res.json(articleToReturn)
     }).catch(err => {

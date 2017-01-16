@@ -1,0 +1,62 @@
+<!doctype html>
+<div ng-controller="UserLoginController as userLogCtr" class="formPage pt-3 form-group container">
+  <form ng-if="!userLogCtr.signUp" class="" ng-submit="userLogCtr.login()" method="post">
+      <h3>Login</h3>
+     <div class="form-group row">
+        <label for="email" class="col-2 col-form-label">Email</label>
+      <div class="col-10">
+        <input class="form-control" type="text" ng-model="userLogCtr.email" name="email" placeholder="jane@doe.com">
+      </div>
+    </div>
+    <div class="form-group row">
+       <label for="pass" class="col-2 col-form-label">Password</label>
+     <div class="col-10">
+       <input class="form-control" type="password" ng-model="userLogCtr.pass" name="pass" placeholder="••••••••">
+     </div>
+   </div>
+
+    <button class="btn btn-primary" type="submit" name="login">Submit</button>
+  </form>
+
+  <form ng-if="userLogCtr.signUp" class="" ng-submit="userLogCtr.signUpNewUser()" method="post">
+
+    <h3>Sign Up</h3>
+    <div class="form-group row">
+       <label for="name" class="col-2 col-form-label">Name</label>
+     <div class="col-10">
+       <input type="text" class="form-control" ng-model="userLogCtr.name" name="name" placeholder="Jane Doe">
+     </div>
+   </div>
+    <div class="form-group row">
+       <label for="email" class="col-2 col-form-label">Email</label>
+     <div class="col-10">
+       <input class="form-control" type="text" ng-model="userLogCtr.email" name="email" placeholder="jane@doe.com">
+     </div>
+   </div>
+   <div class="form-group row">
+      <label for="pass" class="col-2 col-form-label">Password</label>
+    <div class="col-10">
+      <input class="form-control" type="password" ng-model="userLogCtr.pass" name="pass" placeholder="••••••••">
+    </div>
+  </div>
+
+  <div class="form-group row">
+     <label for="confirmPass" class="col-2 col-form-label">Confirm Password</label>
+   <div class="col-10">
+     <input type="password" class="form-control" ng-model="userLogCtr.confirmPass" name="confirmPass" placeholder="••••••••">
+   </div>
+ </div>
+
+    <button class="btn btn-primary" type="submit" name="signUp">Submit</button>
+  </form>
+
+  <a class="btn btn-primary my-3" ng-click="userLogCtr.signUp = !userLogCtr.signUp" role="button">{{userLogCtr.signUp ? 'Login' : 'Sign Up'}}</a>
+
+  <div ng-if="userLogCtr.errors">
+    <ul ng-repeat="error in userLogCtr.errors">
+      <li class="alert alert-danger" role="alert">
+        <p>{{error.message}}</p>
+      </li>
+    </ul>
+  </div>
+</div>

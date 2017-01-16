@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-base64": "^2.0.5",
     "angular-google-maps": "^2.4.1",
     "angular-route": "^1.6.1",
     "angular-simple-logger": "^0.1.7",
@@ -24,7 +25,9 @@
     "wtf_wikipedia": "^0.7.1"
   },
   "devDependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sass": "^3.1.0"
   }
 }

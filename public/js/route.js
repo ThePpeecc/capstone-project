@@ -19,8 +19,28 @@
         $routeProvider
             .when('/', {
                 controller: 'MapController',
-                controllerAs: 'vm',
+                controllerAs: 'mapCtr',
                 templateUrl: 'templates/map.html'
+            })
+            .when('/map/:lat/:long', {
+                controller: 'MapController',
+                controllerAs: 'mapCtr',
+                templateUrl: 'templates/map.html'
+            })
+            .when('/detail/:id', {
+                controller: 'DetailController',
+                controllerAs: 'detailCtr',
+                templateUrl: 'templates/detail.html'
+            })
+            .when('/login', {
+                controller: 'UserLoginController',
+                controllerAs: 'userLogCtr',
+                templateUrl: 'templates/login.html'
+            })
+            .when('/user', {
+                controller: 'UserController',
+                controllerAs: 'userCtr',
+                templateUrl: 'templates/user.html'
             })
             .otherwise({
                 redirectTo: '/'

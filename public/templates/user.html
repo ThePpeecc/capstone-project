@@ -1,0 +1,27 @@
+<!doctype html>
+<div class="container" ng-controller="UserController as userCtr">
+  <div class="col-xs-12">
+    <p><strong>Name:</strong> {{userCtr.user.name}}</p>
+    <p><strong>Email:</strong> {{userCtr.user.emailAddress}}</p>
+  </div>
+  <div class="row" id="savedUserInfo">
+    <div class="col-md-6 mt-3">
+        <h3>Saved Articles</h3>
+        <div class="btn-group my-2" role="group" ng-repeat="article in userCtr.user.articles track by $index">
+          <a href class="btn btn-secondary" ng-click="userCtr.tjekArticle(article.articleID)" >{{article.title.length > 25 ? article.title.substring(0, 25) + '...' : article.title}}</a>
+          <a class="btn btn-danger" role="button" href ng-click="userCtr.removeArticle(article._id, $index)" >Remove</a>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <h3>Saved Places</h3>
+      <div class="btn-group my-2" role="group"  ng-repeat="place in userCtr.user.savedPlaces track by $index">
+        <a class="btn btn-secondary" href ng-click="userCtr.tjekPlace(place)" >{{place.title.length > 25 ? place.title.substring(0, 25) + '...' : place.title}}</a>
+        <a class="btn btn-danger" role="button" href ng-click="userCtr.removePlace(place._id, $index)" >Remove</a>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-if="userCtr.showDetail">
+    <ng-include src="'templates/detail.html'"></ng-include>
+  </div>
+</div>

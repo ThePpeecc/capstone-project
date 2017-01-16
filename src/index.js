@@ -46,6 +46,9 @@ app.get('/vendor/angular-google-maps.js', function(req, res) {
 app.get('/vendor/angular-simple-logger.js', function(req, res) {
     res.sendFile(path.join(__dirname, '../node_modules', 'angular-simple-logger/dist', 'angular-simple-logger.js'));
 })
+app.get('/vendor/angular-base64.js', function(req, res) {
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular-base64', 'angular-base64.js'));
+})
 
 
 app.use(mid.getAuth)
@@ -64,6 +67,7 @@ app.use(function(req, res, next) { //<-- see that this has no error, therefore t
 //The error handler
 app.use(function(err, req, res, next) {
     res.status(err.status || 500)
+    console.log(err);
     return res.json(err) //We send the error
 })
 

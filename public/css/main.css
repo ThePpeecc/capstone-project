@@ -1,1 +1,27 @@
-.angular-google-map-container { height: 400px; }
+body,
+html {
+  padding: 0 5px; }
+
+#savedUserInfo .btn-secondary {
+  min-width: 250px; }
+
+img {
+  max-height: 400px; }
+
+.angular-google-map-container {
+  height: 400px; }
+
+.main {
+  color: white; }
+
+.formPage {
+  color: white; }
+  .formPage h3,
+  .formPage label {
+    color: black; }
+
+.minMarg {
+  margin: 1rem; }
+
+.px-6 {
+  padding: 0 2rem; }
