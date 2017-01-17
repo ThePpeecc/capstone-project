@@ -72,10 +72,10 @@
              */
             userLogCtr.signUpNewUser = function() {
                 dataService.createUser({ //We try to create a user
-                    "name": userLogCtr.name,
-                    "emailAddress": userLogCtr.email,
-                    "password": userLogCtr.pass,
-                    "confirmPassword": userLogCtr.confirmPass
+                    'name': userLogCtr.name,
+                    'emailAddress': userLogCtr.email,
+                    'password': userLogCtr.pass,
+                    'confirmPassword': userLogCtr.confirmPass
                 }).then(function() {
                     userLogCtr.signUp = false //we get a succesfull response so we show the login details, so the user can login
                 }).catch(errorHandeler)

@@ -22,7 +22,7 @@ var User = require('../models/user'),
  * @param  {Number}   [status=500] The status of the error, 500 is standard
  */
 var errorHandler = function(err, req, res, next, status = 500) {
-    if (err) {//We tjek for an error
+    if (err) { //We tjek for an error
         if (err.name == 'LoginErr') { //If it is the login error type
             err.errors = { //We manually add the error message
                 'err': {
@@ -45,8 +45,8 @@ var getAuth = function(req, res, next) {
     var userAuth = auth(req) //We get the authentication parameters from the browser
     if (userAuth) { //If they have sendt us any authentication
         User.findOne({
-                'emailAddress': userAuth.name.toLowerCase() //We find the user by the email
-            })
+            'emailAddress': userAuth.name.toLowerCase() //We find the user by the email
+        })
             .exec(function(err, user) {
                 errorHandler(err, req, res, next)
                 if (user) {

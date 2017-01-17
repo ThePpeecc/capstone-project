@@ -23,7 +23,7 @@
         .service('dataService', function($http, $httpParamSerializer, $base64, communicationFactory) { //We depend on the $http functionality for our networking
 
             var baseURL = 'http://localhost:3000',
-                   auth = '',
+                auth = '',
                 headers = {}
 
             /**
@@ -32,8 +32,12 @@
              * @param  {String} pass  The users password
              */
             communicationFactory.updateUserLoginInfo = function(email, pass) {
-              auth = $base64.encode(email + ':' + pass),
-              headers = {headers: {'Authorization': 'Basic ' + auth}}
+                auth = $base64.encode(email + ':' + pass),
+                    headers = {
+                        headers: {
+                            'Authorization': 'Basic ' + auth
+                        }
+                    }
             }
 
             /**
@@ -52,7 +56,7 @@
              * @return {promise}   We return a promise with the returned json
              */
             this.getArticle = function(id) {
-              return $http.get(baseURL + '/api/article/' + id)
+                return $http.get(baseURL + '/api/article/' + id)
             }
 
             /**
@@ -61,7 +65,7 @@
              * @return {promise}        We return a promise with the returned json
              */
             this.createUser = function(user) {
-              return $http.post(baseURL + '/api/user', user)
+                return $http.post(baseURL + '/api/user', user)
             }
 
             /**
@@ -69,7 +73,7 @@
              * @return {promise}        We return a promise with the returned json
              */
             this.getUserInfomation = function() {
-              return $http.get(baseURL + '/api/user', headers)
+                return $http.get(baseURL + '/api/user', headers)
             }
 
             /**
@@ -78,7 +82,7 @@
              * @return {promise}            We return a promise with the returned json
              */
             this.saveArticle = function(article) {
-              return $http.post(baseURL + '/api/save/article/', article, headers)
+                return $http.post(baseURL + '/api/save/article/', article, headers)
             }
 
             /**
@@ -87,7 +91,7 @@
              * @return {promise}   We return a promise with the returned json
              */
             this.deleteArticle = function(id) {
-              return $http.delete(baseURL + '/api/delete/article/' + id, headers)
+                return $http.delete(baseURL + '/api/delete/article/' + id, headers)
             }
 
             /**
@@ -96,7 +100,7 @@
              * @return {promise}         We return a promise with the returned json
              */
             this.savePlace = function(place) {
-              return $http.post(baseURL + '/api/save/place/', place, headers)
+                return $http.post(baseURL + '/api/save/place/', place, headers)
             }
 
             /**
@@ -105,7 +109,7 @@
              * @return {promise}   We return a promise with the returned json
              */
             this.deletePlace = function(id) {
-              return $http.delete(baseURL + '/api/delete/place/' + id, headers)
+                return $http.delete(baseURL + '/api/delete/place/' + id, headers)
             }
 
         })

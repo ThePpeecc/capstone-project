@@ -1,4 +1,5 @@
 /* global angular*/
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /**
  * This file holds the map controller module
  *
@@ -18,10 +19,10 @@
         .controller('MapController', function($scope, $location, dataService, uiGmapGoogleMapApi, communicationFactory, $routeParams) {
 
             var mapCtr = this,
-            demoCoords = { //The demo coordinates are the first place that we load in so the app can load in google maps
-                latitude: 0,
-                longitude: 0
-            }
+                demoCoords = { //The demo coordinates are the first place that we load in so the app can load in google maps
+                    latitude: 0,
+                    longitude: 0
+                }
 
             mapCtr.locationErr = ''
             mapCtr.placeTitle = ''
@@ -32,18 +33,18 @@
              */
             function showError(error) {
                 switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        mapCtr.locationErr = "User denied the request for Geolocation."
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        mapCtr.locationErr = "Location information is unavailable."
-                        break;
-                    case error.TIMEOUT:
-                        mapCtr.locationErr = "The request to get user location timed out."
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        mapCtr.locationErr = "An unknown error occurred."
-                        break;
+                case error.PERMISSION_DENIED:
+                    mapCtr.locationErr = 'User denied the request for Geolocation.'
+                    break
+                case error.POSITION_UNAVAILABLE:
+                    mapCtr.locationErr = 'Location information is unavailable.'
+                    break
+                case error.TIMEOUT:
+                    mapCtr.locationErr = 'The request to get user location timed out.'
+                    break
+                case error.UNKNOWN_ERROR:
+                    mapCtr.locationErr = 'An unknown error occurred.'
+                    break
                 }
                 $scope.$apply() //We apply
             }
@@ -72,17 +73,17 @@
              * @param  {object} place The places coordinates
              */
             mapCtr.savePlace = function(place) {
-              dataService.savePlace({ //We try to save the place
-                "title": mapCtr.placeTitle,
-                "latitude": place.latitude,
-                "longitude": place.longitude
-              }).then(function() {
-                if (communicationFactory.reloadUserInfo) {
-                  communicationFactory.reloadUserInfo() //We reload the users information
-                }
-              }).catch(function(err) {
-                console.log(err)
-              })
+                dataService.savePlace({ //We try to save the place
+                    'title': mapCtr.placeTitle,
+                    'latitude': place.latitude,
+                    'longitude': place.longitude
+                }).then(function() {
+                    if (communicationFactory.reloadUserInfo) {
+                        communicationFactory.reloadUserInfo() //We reload the users information
+                    }
+                }).catch(function(err) {
+                    console.log(err)
+                })
             }
 
             /**
@@ -94,16 +95,16 @@
                 var markers = [] //Create an empty array of the markers we will return
 
                 if (articles) {
-                  articles.forEach(function(article, index) {
-                      var marker = { //We fill out a marker
-                          latitude: article.lat,
-                          longitude: article.lon,
-                          title: article.title,
-                          articleID: article.pageid,
-                          id: index
-                      }
-                      markers.push(marker) //We add the marker to the array of markers
-                  })
+                    articles.forEach(function(article, index) {
+                        var marker = { //We fill out a marker
+                            latitude: article.lat,
+                            longitude: article.lon,
+                            title: article.title,
+                            articleID: article.pageid,
+                            id: index
+                        }
+                        markers.push(marker) //We add the marker to the array of markers
+                    })
                 }
 
                 return markers //We return a list of markers
@@ -115,13 +116,13 @@
              * @return {array}         An array of map markers
              */
             var getArticles = function(coords) {
-              var searchCoords = {
-                lat: coords.latitude,
-                long: coords.longitude
-              }
+                var searchCoords = {
+                    lat: coords.latitude,
+                    long: coords.longitude
+                }
                 dataService.getArticles(searchCoords)
                     .then(function(json) { //We get some wikipedia articles from our api
-                        console.log(json);
+                        console.log(json)
                         var geoData = json.data.geosearch //We take out the articles
 
                         return mapCtr.wikiArticles = convertToGMapsMarkers(geoData) //We get convert the geoData into the form of map markers here
@@ -135,7 +136,7 @@
              * @param  {int} zoom        The zoom level of the map
              */
             var showGMap = function(position, zoom) {
-                uiGmapGoogleMapApi.then(function(maps) {
+                uiGmapGoogleMapApi.then(function() {
                     mapCtr.map = {
                         center: {
                             latitude: position.latitude,
@@ -151,8 +152,8 @@
              * @param  {object} coords The coordinates to look up
              */
             mapCtr.lookupPlace = function(coords) {
-              getArticles(coords) //We download the articles
-              showGMap(coords, 17) //And show the map at the users location
+                getArticles(coords) //We download the articles
+                showGMap(coords, 17) //And show the map at the users location
             }
 
             /**
@@ -173,15 +174,15 @@
                     mapCtr.notFound = true
                     navigator.geolocation.getCurrentPosition(showPosition, showError)
                 } else {
-                    mapCtr.locationErr = "Geolocation is not supported by this browser"
+                    mapCtr.locationErr = 'Geolocation is not supported by this browser'
                 }
             }
 
             //Initial calls
             if ($location.url().split('/')[1] === 'map') { //If we are at the maps page
                 var convertToNumbers = {
-                  latitude: Number($routeParams.lat),
-                  longitude: Number($routeParams.long)
+                    latitude: Number($routeParams.lat),
+                    longitude: Number($routeParams.long)
                 }
                 getArticles(convertToNumbers)
                 showGMap(convertToNumbers, 17)

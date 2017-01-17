@@ -39,42 +39,44 @@ var userSchema = new mongoose.Schema({
         required: [true, 'We need a confirm password']
     },
     articles: {
-      type: [{
-        articleID: {
-          type: String,
-          required: [true, 'We need an article Id']
-        },
-        title: {
-          type: String,
-          required: [true, 'We need a title for the article']
-        },
-        latitude: {
-          type: Number,
-          required: [true, 'We need a latitude for the article']
-        },
-        longitude: {
-          type: Number,
-          required: [true, 'We need a longitude for the article']
-        }
-      }]
+        type: [{
+            articleID: {
+                type: String,
+                required: [true, 'We need an article Id']
+            },
+            title: {
+                type: String,
+                required: [true, 'We need a title for the article']
+            },
+            latitude: {
+                type: Number,
+                required: [true, 'We need a latitude for the article']
+            },
+            longitude: {
+                type: Number,
+                required: [true, 'We need a longitude for the article']
+            }
+        }]
     },
     savedPlaces: {
-      type: [{
-        title: {
-          type: String,
-          required: [true, 'We need a title for the place']
-        },
-        latitude: {
-          type: Number,
-          required: [true, 'We need a latitude for the place']
-        },
-        longitude: {
-          type: Number,
-          required: [true, 'We need a longitude for the place']
-        }
-      }]
+        type: [{
+            title: {
+                type: String,
+                required: [true, 'We need a title for the place']
+            },
+            latitude: {
+                type: Number,
+                required: [true, 'We need a latitude for the place']
+            },
+            longitude: {
+                type: Number,
+                required: [true, 'We need a longitude for the place']
+            }
+        }]
     }
-}, { id: false }) //Remove the standard virtual id
+}, {
+    id: false
+}) //Remove the standard virtual id
 
 //Here we validate if the password and confirmPassword match
 userSchema.pre('validate', function(next) {
@@ -87,8 +89,8 @@ userSchema.pre('validate', function(next) {
 userSchema.pre('save', function(next) {
     const saltRounds = 10 //pew pew pew
     var user = this
-        //You may think that this is not nessesary, BUT IT IS!
-        //If you don't assign this to user the hashed password can't get assigned to the password, and therefore won't get saved
+    //You may think that this is not nessesary, BUT IT IS!
+    //If you don't assign this to user the hashed password can't get assigned to the password, and therefore won't get saved
 
     bcrypt.hash(user.password, saltRounds, function(err, hash) {
 

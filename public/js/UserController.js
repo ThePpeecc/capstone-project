@@ -48,11 +48,11 @@
              * @param  {int} index THe index of the article in the articles array
              */
             userCtr.removeArticle = function(id, index) {
-              if (confirm('Are you sure you want to remove this article?')) { //We ask if they are sure that they want to delte the article
+                if (confirm('Are you sure you want to remove this article?')) { //We ask if they are sure that they want to delte the article
                     dataService.deleteArticle(id)
-                    .then(function() {
-                        userCtr.user.articles.splice(index, 1) //We remove the article from the array
-                    })
+                        .then(function() {
+                            userCtr.user.articles.splice(index, 1) //We remove the article from the array
+                        })
                 }
             }
 
@@ -62,11 +62,11 @@
              * @param  {int} index THe index of the place in the savedPlaces array
              */
             userCtr.removePlace = function(id, index) {
-              if (confirm('Are you sure you want to remove this place?')) { //We ask if they are sure that they want to delte the place
+                if (confirm('Are you sure you want to remove this place?')) { //We ask if they are sure that they want to delte the place
                     dataService.deletePlace(id)
-                    .then(function() {
-                        userCtr.user.savedPlaces.splice(index, 1) //We remove the place from the array
-                    })
+                        .then(function() {
+                            userCtr.user.savedPlaces.splice(index, 1) //We remove the place from the array
+                        })
                 }
             }
 

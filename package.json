@@ -4,7 +4,11 @@
   "description": "THe final project for my treehouse techdegree",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "7.4.0"
   },
   "author": "Marcus A Hansen",
   "license": "ISC",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "del": "^2.2.2",
+    "eslint": "^3.13.1",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-sass": "^3.1.0"

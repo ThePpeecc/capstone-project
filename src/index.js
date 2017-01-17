@@ -4,7 +4,7 @@
 /**
  * This Module holds the main entrence to the server and route functionality
  *
- * @summary   The module holds the server functionality and  is the place where we take care of all the error handeling
+ * @summary   The module holds the server functionality and is the place where we take care of all the error handeling
  *
  * @since     07.01.2017
  * @requires Node.js, mongoose, express & bodyparser
@@ -20,7 +20,7 @@ var express = require('express'),
 
 var app = express()
 
-mongoose.connect('mongodb://localhost:27017/wikiMap') //We connect ot the database
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/wikiMap') //We connect ot the database
 
 var db = mongoose.connection
 
@@ -35,19 +35,19 @@ app.use(bodyParser.urlencoded({
 
 // vendor scripts
 app.get('/vendor/angular.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '../node_modules', 'angular', 'angular.js'));
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular', 'angular.js'))
 })
 app.get('/vendor/angular-route.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '../node_modules', 'angular-route', 'angular-route.js'));
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular-route', 'angular-route.js'))
 })
 app.get('/vendor/angular-google-maps.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '../node_modules', 'angular-google-maps/dist', 'angular-google-maps.js'));
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular-google-maps/dist', 'angular-google-maps.js'))
 })
 app.get('/vendor/angular-simple-logger.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '../node_modules', 'angular-simple-logger/dist', 'angular-simple-logger.js'));
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular-simple-logger/dist', 'angular-simple-logger.js'))
 })
 app.get('/vendor/angular-base64.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '../node_modules', 'angular-base64', 'angular-base64.js'));
+    res.sendFile(path.join(__dirname, '../node_modules', 'angular-base64', 'angular-base64.js'))
 })
 
 

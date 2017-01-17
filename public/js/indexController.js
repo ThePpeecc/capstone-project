@@ -23,31 +23,31 @@
              * Redirects to the lading page
              */
             index.home = function() {
-              $location.path('/')
+                $location.path('/')
             }
 
             /**
              * Redirects to the login page
              */
             index.login = function() {
-              $location.path('/login')
+                $location.path('/login')
             }
 
             /**
              * Redirects to the user page
              */
             index.user = function() {
-              $location.path('/user')
+                $location.path('/user')
             }
 
             /**
              * Logs the user out and redirects to the landing page
              */
             index.logOut = function() {
-              communicationFactory.updateUserLoginInfo(null, null) //We delete the users information
-              communicationFactory.userData = null //And the users data
-              $rootScope.loggedIn = false;
-              $location.path('/')
+                communicationFactory.updateUserLoginInfo(null, null) //We delete the users information
+                communicationFactory.userData = null //And the users data
+                $rootScope.loggedIn = false
+                $location.path('/')
             }
         })
 })()

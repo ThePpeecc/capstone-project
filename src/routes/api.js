@@ -11,7 +11,7 @@
 //We get our required module
 var express = require('express'),
     rp = require('request-promise'),
-    wikiParser = require("wtf_wikipedia"),
+    wikiParser = require('wtf_wikipedia'),
     userModel = require('../models/user'),
     mid = require('../middleware/mid')
 
@@ -46,19 +46,19 @@ router.get('/articles', function(req, res, next) {
         longitude = req.query.long
 
     rp(queryfi(baseURL, {
-            action: 'query',
-            list: 'geosearch',
-            gscoord: latitude + '|' + longitude,
-            format: 'json'
-        }))
-        .then(function(json) {
-            return res.json(JSON.parse(json).query)
-            // Process html...
-        })
-        .catch(function(err) {
-            // Crawling failed...
-            errorHandler(err, req, res, next)
-        })
+        action: 'query',
+        list: 'geosearch',
+        gscoord: latitude + '|' + longitude,
+        format: 'json'
+    }))
+    .then(function(json) {
+        return res.json(JSON.parse(json).query)
+        // Process html...
+    })
+    .catch(function(err) {
+        // Crawling failed...
+        errorHandler(err, req, res, next)
+    })
 })
 
 /**
@@ -114,13 +114,13 @@ router.post('/user', function(req, res, next) {
 router.get('/user', mid.isAuth, function(req, res, next) {
     res.status(200)
     userModel.findOne({ //We find the user
-            'emailAddress': req.currentUser.emailAddress
-        })
-        .select('-password -confirmPassword -_id -__v') //We don't wan't to send any of these informations to the user
-        .exec(function(err, user) {
-            errorHandler(err, req, res, next, 404)
-            return res.json(user)
-        })
+        'emailAddress': req.currentUser.emailAddress
+    })
+    .select('-password -confirmPassword -_id -__v') //We don't wan't to send any of these informations to the user
+    .exec(function(err, user) {
+        errorHandler(err, req, res, next, 404)
+        return res.json(user)
+    })
 })
 
 /**
@@ -129,18 +129,18 @@ router.get('/user', mid.isAuth, function(req, res, next) {
  */
 router.post('/save/article', mid.isAuth, function(req, res, next) {
     userModel.findOne({ //Find the user
-            'emailAddress': req.currentUser.emailAddress
-        })
-        .exec(function(err, user) {
-            errorHandler(err, req, res, next, 404)
+        'emailAddress': req.currentUser.emailAddress
+    })
+    .exec(function(err, user) {
+        errorHandler(err, req, res, next, 404)
 
-            user.articles.push(req.body) //add the article
-            user.update(user, function(err) { //Update the user with the article
-                errorHandler(err, req, res, next)
-                res.status(201)
-                return res.end()
-            })
+        user.articles.push(req.body) //add the article
+        user.update(user, function(err) { //Update the user with the article
+            errorHandler(err, req, res, next)
+            res.status(201)
+            return res.end()
         })
+    })
 })
 
 /**
@@ -149,23 +149,23 @@ router.post('/save/article', mid.isAuth, function(req, res, next) {
  */
 router.delete('/delete/article/:id', mid.isAuth, function(req, res, next) {
     userModel.findOne({
-            'emailAddress': req.currentUser.emailAddress //We find the user
-        })
-        .exec(function(err, user) {
-            errorHandler(err, req, res, next, 404)
+        'emailAddress': req.currentUser.emailAddress //We find the user
+    })
+    .exec(function(err, user) {
+        errorHandler(err, req, res, next, 404)
 
-            user.articles.forEach(function(article, index) { //We find and remove the article
-              if (article._id == req.params.id) {
+        user.articles.forEach(function(article, index) { //We find and remove the article
+            if (article._id == req.params.id) {
                 user.articles.splice(index, 1)
-              }
-            })
-
-            user.update(user, function(err) { //We update the user
-                errorHandler(err, req, res, next, 404)
-                res.status(204)
-                return res.end()
-            })
+            }
         })
+
+        user.update(user, function(err) { //We update the user
+            errorHandler(err, req, res, next, 404)
+            res.status(204)
+            return res.end()
+        })
+    })
 })
 
 
@@ -175,18 +175,18 @@ router.delete('/delete/article/:id', mid.isAuth, function(req, res, next) {
  */
 router.post('/save/place', mid.isAuth, function(req, res, next) {
     userModel.findOne({
-            'emailAddress': req.currentUser.emailAddress //We find the user
-        })
-        .exec(function(err, user) {
-            errorHandler(err, req, res, next, 404)
+        'emailAddress': req.currentUser.emailAddress //We find the user
+    })
+    .exec(function(err, user) {
+        errorHandler(err, req, res, next, 404)
 
-            user.savedPlaces.push(req.body) //We add a place
-            user.update(user, function(err) { //We try to update the user
-                errorHandler(err, req, res, next)
-                res.status(201)
-                return res.end()
-            })
+        user.savedPlaces.push(req.body) //We add a place
+        user.update(user, function(err) { //We try to update the user
+            errorHandler(err, req, res, next)
+            res.status(201)
+            return res.end()
         })
+    })
 })
 
 
@@ -196,23 +196,23 @@ router.post('/save/place', mid.isAuth, function(req, res, next) {
  */
 router.delete('/delete/place/:id', mid.isAuth, function(req, res, next) {
     userModel.findOne({ //We find the user
-            'emailAddress': req.currentUser.emailAddress
-        })
-        .exec(function(err, user) {
-            errorHandler(err, req, res, next, 404)
+        'emailAddress': req.currentUser.emailAddress
+    })
+    .exec(function(err, user) {
+        errorHandler(err, req, res, next, 404)
 
-            user.savedPlaces.forEach(function(place, index) { //We find and remove the place from the user
-              if (place._id == req.params.id) {
+        user.savedPlaces.forEach(function(place, index) { //We find and remove the place from the user
+            if (place._id == req.params.id) {
                 user.savedPlaces.splice(index, 1)
-              }
-            })
-
-            user.update(user, function(err) { //we try to update the user
-                errorHandler(err, req, res, next, 404)
-                res.status(204)
-                return res.end()
-            })
+            }
         })
+
+        user.update(user, function(err) { //we try to update the user
+            errorHandler(err, req, res, next, 404)
+            res.status(204)
+            return res.end()
+        })
+    })
 })
 
 

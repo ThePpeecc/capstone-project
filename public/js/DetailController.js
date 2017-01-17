@@ -1,4 +1,5 @@
 /* global angular*/
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /**
  * This file holds the article detail controller module
  *
@@ -25,7 +26,7 @@
             var loadArticle = function() {
                 detailCtr.articleMarker = communicationFactory.articleModel //We save the articleModel for later use (it is needed if we save the article in the template)
                 if (communicationFactory.articleID) {
-                    dataService.getArticle(communicationFactory.articleID)//We download the article
+                    dataService.getArticle(communicationFactory.articleID) //We download the article
                         .then(function(json) {
                             detailCtr.article = json.data
 
@@ -46,22 +47,22 @@
              * @param  {object} article This is the article object that we wan't to save
              */
             detailCtr.saveArticle = function(article) {
-              dataService.saveArticle(article).then(function(json) {//We save the article
-                if (communicationFactory.reloadUserInfo) {
-                  communicationFactory.reloadUserInfo() //We reload the users information
-                }
-              })
-              .catch(function(err) {
-                console.log(err)
-              })
+                dataService.saveArticle(article).then(function() { //We save the article
+                    if (communicationFactory.reloadUserInfo) {
+                        communicationFactory.reloadUserInfo() //We reload the users information
+                    }
+                })
+                    .catch(function(err) {
+                        console.log(err)
+                    })
             }
 
 
             //Initial calls when the detail-view has been loaded
             if ($location.url().split('/')[1] === 'user') { //We make sure we don't show the save button when this view gets loaded into the users page. (we don't want to save an article twice now)
-              detailCtr.showSaveButton = false
-            }else {
-              detailCtr.showSaveButton = true
+                detailCtr.showSaveButton = false
+            } else {
+                detailCtr.showSaveButton = true
             }
 
             //We assign our reload function to our communicationFactory
