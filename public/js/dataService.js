@@ -20,9 +20,9 @@
     angular.module('app')
 
         //We create our service
-        .service('dataService', function($http, $httpParamSerializer, $base64, communicationFactory) { //We depend on the $http functionality for our networking
+        .service('dataService', function($http, $httpParamSerializer, $base64, communicationFactory, $location) { //We depend on the $http functionality for our networking
 
-            var baseURL = 'http://localhost:3000',
+            var baseURL = $location.protocol() + '://'+ $location.host() + ($location.port() ? ':'+  $location.port() : ''), //We build the baseURL
                 auth = '',
                 headers = {}
 
