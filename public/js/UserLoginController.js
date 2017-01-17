@@ -64,6 +64,7 @@
                     communicationFactory.updateUserLoginInfo(userLogCtr.email, userLogCtr.pass) //We update the users login information with what the user has typed ind
                     loadUser() //We try to load in the user
                         .then(function() {
+                            userLogCtr.errors = null
                             $rootScope.loggedIn = true
                             $location.path('/user') //It works so we redirect them to the user screen
                         })

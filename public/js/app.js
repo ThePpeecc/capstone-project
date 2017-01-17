@@ -16,9 +16,4 @@
 (function() {
     'use strict'
     angular.module('app', ['ngRoute', 'nemLogging', 'uiGmapgoogle-maps', 'base64'])
-        .config(function(uiGmapGoogleMapApiProvider) { //We setup the google maps api
-
-            uiGmapGoogleMapApiProvider.configure({
-            })
-        })
 })()

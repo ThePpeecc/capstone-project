@@ -1,5 +1,4 @@
 /* global angular*/
-/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /**
  * This file holds the article detail controller module
  *
@@ -16,7 +15,7 @@
  */
 (function() {
     angular.module('app') // We get the app module
-        .controller('DetailController', function($scope, $location, dataService, communicationFactory) {
+        .controller('DetailController', function($scope, $location, dataService, communicationFactory, errorHandeler) {
 
             var detailCtr = this
 
@@ -37,7 +36,9 @@
                             } else {
                                 detailCtr.imageURL = ''
                             }
-
+                        })
+                        .catch(function(err) {
+                            errorHandeler.networkErr(err)
                         })
                 }
             }
@@ -47,13 +48,14 @@
              * @param  {object} article This is the article object that we wan't to save
              */
             detailCtr.saveArticle = function(article) {
-                dataService.saveArticle(article).then(function() { //We save the article
-                    if (communicationFactory.reloadUserInfo) {
-                        communicationFactory.reloadUserInfo() //We reload the users information
-                    }
-                })
+                dataService.saveArticle(article)
+                    .then(function() { //We save the article
+                        if (communicationFactory.reloadUserInfo) {
+                            communicationFactory.reloadUserInfo() //We reload the users information
+                        }
+                    })
                     .catch(function(err) {
-                        console.log(err)
+                        errorHandeler.unexpectedErr(err)
                     })
             }
 

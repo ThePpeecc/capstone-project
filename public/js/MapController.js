@@ -1,5 +1,4 @@
 /* global angular*/
-/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /**
  * This file holds the map controller module
  *
@@ -16,7 +15,7 @@
  */
 (function() {
     angular.module('app') // We get the app module
-        .controller('MapController', function($scope, $location, dataService, uiGmapGoogleMapApi, communicationFactory, $routeParams) {
+        .controller('MapController', function($scope, $location, dataService, uiGmapGoogleMapApi, communicationFactory, $routeParams, errorHandeler) {
 
             var mapCtr = this,
                 demoCoords = { //The demo coordinates are the first place that we load in so the app can load in google maps
@@ -82,7 +81,7 @@
                         communicationFactory.reloadUserInfo() //We reload the users information
                     }
                 }).catch(function(err) {
-                    console.log(err)
+                    errorHandeler.unexpectedErr(err)
                 })
             }
 
@@ -122,11 +121,10 @@
                 }
                 dataService.getArticles(searchCoords)
                     .then(function(json) { //We get some wikipedia articles from our api
-                        console.log(json)
                         var geoData = json.data.geosearch //We take out the articles
-
                         return mapCtr.wikiArticles = convertToGMapsMarkers(geoData) //We get convert the geoData into the form of map markers here
-
+                    }).catch(function(err) {
+                        errorHandeler.networkErr(err)
                     })
             }
 

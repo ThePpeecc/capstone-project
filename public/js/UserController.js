@@ -15,7 +15,7 @@
  */
 (function() {
     angular.module('app') // We get the app module
-        .controller('UserController', function($scope, $location, dataService, communicationFactory, $rootScope) {
+        .controller('UserController', function($scope, $location, dataService, communicationFactory, $rootScope, errorHandeler) {
 
             var userCtr = this
             userCtr.user = communicationFactory.userData
@@ -53,6 +53,9 @@
                         .then(function() {
                             userCtr.user.articles.splice(index, 1) //We remove the article from the array
                         })
+                        .catch(function(err) {
+                            errorHandeler.unexpectedErr(err)
+                        })
                 }
             }
 
@@ -66,6 +69,9 @@
                     dataService.deletePlace(id)
                         .then(function() {
                             userCtr.user.savedPlaces.splice(index, 1) //We remove the place from the array
+                        })
+                        .catch(function(err) {
+                            errorHandeler.unexpectedErr(err)
                         })
                 }
             }
