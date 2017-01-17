@@ -31,14 +31,18 @@
              * @param  {Error} err The error
              */
             function errorHandeler(err) {
-                if (err.data.name == 'ValidationError' || err.data.name == 'LoginErr') { //We tjek the error
-                    userLogCtr.errors = err.data.errors //We can display the error
-                } else {
-                    userLogCtr.errors = { //It is an unknown error so we display that
-                        'Error': {
-                            message: 'An unknown error has occurred'
+                if (err) {
+                    if (err.data.name == 'ValidationError' || err.data.name == 'LoginErr') { //We tjek the error
+                        userLogCtr.errors = err.data.errors //We can display the error
+                    } else {
+                        userLogCtr.errors = { //It is an unknown error so we display that
+                            'Error': {
+                                message: 'An unknown error has occurred'
+                            }
                         }
                     }
+                } else {
+                    userLogCtr.errors = null
                 }
             }
 
@@ -77,13 +81,13 @@
                     'password': userLogCtr.pass,
                     'confirmPassword': userLogCtr.confirmPass
                 }).then(function() {
+                    userLogCtr.errors = null
                     userLogCtr.signUp = false //we get a succesfull response so we show the login details, so the user can login
                 }).catch(errorHandeler)
             }
 
             /**
              * We assing our reloadUserInfo to our loadUser function so other controllers can call it
-             * @return {[type]} [description]
              */
             communicationFactory.reloadUserInfo = loadUser
 

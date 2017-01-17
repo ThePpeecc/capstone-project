@@ -19,7 +19,6 @@
         .config(function(uiGmapGoogleMapApiProvider) { //We setup the google maps api
 
             uiGmapGoogleMapApiProvider.configure({
-                key: 'AIzaSyDkjUN9XQUglxqouF-QV4QE8Ym-v7KJYjU' //Our google maps api key
             })
         })
 })()
